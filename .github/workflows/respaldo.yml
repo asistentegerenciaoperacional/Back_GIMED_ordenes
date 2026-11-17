@@ -1,0 +1,23 @@
+name: Respaldo corporativo del piloto
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency: respaldo-piloto
+jobs:
+  backup:
+    if: vars.GIMED_BACKUP_ENABLED == 'true'
+    environment: piloto
+    runs-on: [self-hosted, gimed-backup]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - run: npm ci
+      - run: node --import tsx scripts/respaldo.ts
+        env:
+          GIMED_BACKUP_DIR: ${{ vars.GIMED_BACKUP_DIR }}
+          GIMED_BACKUP_KEY: ${{ secrets.GIMED_BACKUP_KEY }}
+          GIMED_ADMIN_DB_URL: ${{ secrets.GIMED_ADMIN_DB_URL }}
+          GIMED_SUPABASE_URL: ${{ vars.GIMED_SUPABASE_URL }}
+          GIMED_SUPABASE_STORAGE_KEY: ${{ secrets.GIMED_SUPABASE_STORAGE_KEY }}

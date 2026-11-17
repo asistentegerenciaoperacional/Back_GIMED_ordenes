@@ -1,0 +1,9 @@
+project_id = "gimed-ordenes"
+
+[db]
+major_version = 17
+
+[functions.api]
+verify_jwt = false
+entrypoint = "./functions/api/index.ts"
+import_map = "./functions/api/deno.json"

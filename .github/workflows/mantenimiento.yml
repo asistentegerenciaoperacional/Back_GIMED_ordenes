@@ -1,0 +1,25 @@
+name: Limpieza de archivos y sesiones
+on:
+  schedule:
+    - cron: "20 8 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency: mantenimiento-piloto
+jobs:
+  cleanup:
+    if: vars.GIMED_MAINTENANCE_ENABLED == 'true'
+    environment: piloto
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run limpiar-archivos
+        env:
+          GIMED_DB_URL: ${{ secrets.GIMED_DB_URL }}
+          GIMED_SUPABASE_URL: ${{ vars.GIMED_SUPABASE_URL }}
+          GIMED_SUPABASE_STORAGE_KEY: ${{ secrets.GIMED_SUPABASE_STORAGE_KEY }}

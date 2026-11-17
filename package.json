@@ -1,0 +1,30 @@
+{
+  "name": "back-gimed-ordenes",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "24.x" },
+  "overrides": { "exceljs": { "uuid": "11.1.1" } },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "consecutivos": "tsx scripts/consecutivos.ts",
+    "importar": "tsx scripts/importar.ts",
+    "limpiar-archivos": "tsx scripts/limpiar-archivos.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.119.0",
+    "csv-parse": "7.0.3",
+    "exceljs": "4.4.0",
+    "hono": "4.13.19",
+    "jose": "6.2.17",
+    "postgres": "3.4.9",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.16",
+    "@types/node": "24.10.9",
+    "supabase": "3.2.0",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3"
+  }
+}
